@@ -24,14 +24,15 @@ function roundRobin(quantum, p1, p2) {
     } else {
       if(!termino2){
         tiempoSalida1 += quantum;
-        paso1 = quantum;
-      }      
+      }    
+      paso1 = quantum;  
       p1 = p1 - quantum;
     }
     console.log("P1:",p1,"Tiempo de salida 1:",tiempoSalida1);
     //Proceso 2
     if(p2 <= quantum){
       tiempoSalida2 = tiempoSalida2 + paso1 + p2;
+      aux1 = tiempoSalida1;
       if(!termino1){
         tiempoSalida1 = tiempoSalida2;
       }
@@ -60,4 +61,4 @@ function roundRobin(quantum, p1, p2) {
 
   return [labels, tiempos];
 }
-roundRobin(20, 31, 46);
+x = roundRobin(20, 96, 84);
