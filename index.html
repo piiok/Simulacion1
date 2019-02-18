@@ -1,0 +1,167 @@
+<html>
+    <head> 
+            <title>
+
+            </title>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <script src="./JQuery/jquery-3.3.1.min.js"></script>
+            <script src="./Chart/Chart.js"></script>
+            <script src="./Chart/Chart.bundle.min.js"></script>
+            <link rel="stylesheet" href="./Bootstrap/css/bootstrap.min.css">
+            <link rel="stylesheet" href="./Bootstrap/css/bootstrap-grid.min.css">
+            <script src="Bootstrap/js/bootstrap.min.js"></script>
+            <script src="./Bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    </head>
+    <body>
+        <br>
+
+        <div class="container">
+            <h2 class="text-center">SIMULACION DIGITAL - TALLER</h2>
+            <br>
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#colas">Colas</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#asensor">Asensor</a>
+            </li>
+            </ul>
+        
+            <!-- Tab panes -->
+            <div class="tab-content">
+            <div id="colas" class="container tab-pane active"><br>
+                <h3>Colas</h3>
+                <p>A continuacion se simula la ejecución de *2* procesos en un procesador de un solo núcleo en el que es posible establecer el quantum 
+                    (en segundos) y el tiempo que demora cada proceso es un aleatorio entre 1 y 100 (segundos), el programa debe 
+                    mostrar la forma como fueron siendo atendidos y finalizados los procesos.</p>
+                    <div class="input-group mb-3 input-group-sm">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Quantum (Segundos)</span>
+                        </div>
+                        <input id="quantum" type="number" class="form-control" value="1" step="1" min="1" onchange="proceso(this.value)">
+                    </div>
+                    <div class="input-group mb-3 input-group-sm">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Proceso 1 (Segundos)</span>
+                            </div>
+                            <input id="p1" type="text" class="form-control" value="" min="1" disabled>
+                    </div>
+                    <div class="input-group mb-3 input-group-sm">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Proceso 2 (Segundos)</span>
+                            </div>
+                            <input id="p2" type="number" class="form-control" value="" min="1" disabled>
+                    </div>
+                <canvas id="canvas1" height="450" width="600"></canvas>
+            </div>
+            <div id="asensor" class="container tab-pane fade"><br>
+                <h3>Asensor</h3>
+                <p></p>
+                <canvas id="canvas2" height="450" width="600"></canvas>
+            </div>
+            </div>
+            <br>
+        </div>
+        <script>
+        // Retorna un entero aleatorio entre min (incluido) y max (excluido)
+        // ¡Usando Math.round() te dará una distribución no-uniforme!
+        function getRandomInt(min=1, max=100) {
+            return (Math.floor(Math.random() * (max - min)) + min);
+        }
+        function proceso(q){
+            q=parseInt(q);
+            var ctx1 = document.getElementById('canvas1').getContext('2d');
+            var p1 = getRandomInt();
+            var p2 = getRandomInt();
+            $("#p1").val(""+p1);
+            $("#p2").val(""+p2);
+            var config1 = configuracion(roundRobin(q,p1,p2));
+            window.myLine = new Chart(ctx1, config1);
+
+        }
+
+        function proceso2(q){
+            q=parseInt(q);
+            var ctx1 = document.getElementById('canvas1').getContext('2d');
+            var p1 = getRandomInt();
+            var p2 = getRandomInt();
+            $("#p1").val(""+p1);
+            $("#p2").val(""+p2);
+            var config1 = configuracion(roundRobin(q,p1,p2));
+            window.myLine = new Chart(ctx1, config1);
+
+        }
+
+		function configuracion2(labels,a){
+            return {
+                type: 'horizontalBar',
+                data: {
+                    labels: labels,
+                    backgroundColor: window.chartColors.red,
+                    datasets: [{
+                        label: 'Proceso 1',
+                        fill: false,
+                        data: a
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            display: true,
+                            ticks: {
+                                min:1
+                            }
+                        }]
+                    }
+                }
+            };
+        } 
+
+        function configuracion(labels,a){
+            return {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    backgroundColor: window.chartColors.red,
+                    datasets: [{
+                        label: 'Proceso 1',
+                        fill: false,
+                        data: a[0]
+                    },{
+                        label: 'Proceso 2',
+                        fill: false,
+                        data: a[1]
+                    },{
+                        label: 'T. de salida Proceso 1',
+                        fill: false,
+                        data: a[2]
+                    },{
+                        label: 'T. de salida Proceso 2',
+                        fill: false,
+                        data: a[3]
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            display: true,
+                            ticks: {
+                                beginAtZero: true,
+                            }
+                        }]
+                    }
+                }
+            };
+        } 
+        
+		window.onload = function() {  
+            var q = getRandomInt();
+            $("#quantum").val(""+q);
+            proceso(q);
+		};
+	
+        </script>
+    </body>
+</html>
