@@ -73,7 +73,13 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">Cantidad de pisos</span>
                         </div>
-                        <input id="pisos" type="text" class="form-control" value="" min="1" step="1" onchange="proceso2()">
+                        <input id="pisos" type="text" class="form-control" min="1" step="1" onchange="proceso2()">
+                </div>
+                <div class="input-group mb-3 input-group-sm">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Cantidad inicial de personas</span>
+                    </div>
+                    <input id="inicial" type="text" class="form-control"  min="1" step="1" disabled>
                 </div>
                 <div id="grafica1">
                     <canvas id="canvas2" height="450" width="600"></canvas>
@@ -93,7 +99,9 @@
             var ctx1 = document.getElementById('canvas2').getContext('2d');
             var capacidad = parseInt($("#capacidad").val());
             var pisos = parseInt($("#pisos").val());
-            var config1 = configuracion2(ascensor(capacidad,pisos));
+            result  =ascensor(capacidad,pisos);
+            var config1 = configuracion2([result[0],result[1]]);
+            $("#inicial").val(result[2]);
             window.myLine2 = new Chart(ctx1, config1);
 
         }
