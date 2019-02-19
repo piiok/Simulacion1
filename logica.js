@@ -94,7 +94,7 @@ function ascensor(capMax, canPisos){
     numeroPiso = i.toString();
     labels.push('Piso ' + i);
     if(personasAscensor !== 0){
-      quedanAscensor = Math.floor(Math.random() * personasAscensor) + 1;
+      quedanAscensor = Math.floor(Math.random() * personasAscensor);
       console.log("Quedan:",quedanAscensor);
       bajanPorPiso = personasAscensor - quedanAscensor;
       personasAscensor = quedanAscensor;
