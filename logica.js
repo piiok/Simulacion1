@@ -85,6 +85,7 @@ function roundRobin(quantum, p1, p2) {
 
 function ascensor(capMax, canPisos){
   personasAscensor = Math.floor(Math.random() * capMax) + 1;
+  personasInicial = personasAscensor;
   console.log("El ascensor comenzo con:",personasAscensor,"personas.");
   labels = [];
   pasajerosPiso = [];
@@ -104,6 +105,6 @@ function ascensor(capMax, canPisos){
   console.log(labels);
   console.log(pasajerosPiso);
 
-  return [labels, pasajerosPiso];
+  return [labels, pasajerosPiso, personasInicial];
 
 }
