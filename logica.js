@@ -61,4 +61,49 @@ function roundRobin(quantum, p1, p2) {
 
   return [labels, tiempos];
 }
-x = roundRobin(20, 96, 84);
+
+// function ascensor(capMax, canPisos){
+//   personasAscensor = Math.floor(Math.random() * capMax) + 1;
+//   console.log("El ascensor comenzo con:",personasAscensor,"personas.");
+//   labels = [];
+//   pasajerosPiso = [];
+
+//   for(i = 1; i <= canPisos; i++){
+//     numeroPiso = i.toString();
+//     labels.push('Piso ' + i);
+//     bajanPorPiso = Math.floor(Math.random() * personasAscensor) + 1;
+//     if(personasAscensor !== 0){
+//       personasAscensor -= bajanPorPiso;
+//     }
+//     console.log("Se bajaron",bajanPorPiso,"en el piso",i,"quedan:",personasAscensor);
+//     pasajerosPiso.push(personasAscensor);
+//   }
+//   console.log(labels);
+//   console.log(pasajerosPiso);
+
+// }
+
+function ascensor(capMax, canPisos){
+  personasAscensor = Math.floor(Math.random() * capMax) + 1;
+  console.log("El ascensor comenzo con:",personasAscensor,"personas.");
+  labels = [];
+  pasajerosPiso = [];
+
+  for(i = 1; i <= canPisos; i++){
+    numeroPiso = i.toString();
+    labels.push('Piso ' + i);
+    if(personasAscensor !== 0){
+      quedanAscensor = Math.floor(Math.random() * personasAscensor) + 1;
+      console.log("Quedan:",quedanAscensor);
+      bajanPorPiso = personasAscensor - quedanAscensor;
+      personasAscensor = quedanAscensor;
+    }
+    console.log("Se bajaron",bajanPorPiso,"en el piso",i,"quedan:",personasAscensor);
+    pasajerosPiso.push(personasAscensor);
+  }
+  console.log(labels);
+  console.log(pasajerosPiso);
+
+  return [labels, pasajerosPiso];
+
+}
