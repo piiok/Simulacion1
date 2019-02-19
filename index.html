@@ -55,15 +55,6 @@
                             </div>
                             <input id="p2" type="number" class="form-control" value="" min="1" disabled>
                     </div>
-                    <div class="input-group mb-3 input-group-sm">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">Tipo de gráfica</span>
-                        </div>
-                        <select class="form-control" id="sel1" name="sellist1" onchange="cambioGrafico(this.value)">
-                            <option value="bar" selected>Diagrama de barras</option>
-                            <option value="line">Diagrama de lineas</option>
-                        </select>
-                    </div>
                     <div id="grafica">
                         <canvas id="canvas1" height="450" width="600"></canvas>
                     </div>
@@ -76,13 +67,13 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">Capacidad del ascensor</span>
                     </div>
-                    <input id="capacidad" type="number" class="form-control" value="1" step="1" min="1" onchange="proceso2()">
+                    <input id="capacidad" type="number" class="form-control"  step="1" min="1" onchange="proceso2()">
                 </div>
                 <div class="input-group mb-3 input-group-sm">
                         <div class="input-group-prepend">
                             <span class="input-group-text">Cantidad de pisos</span>
                         </div>
-                        <input id="pisos" type="text" class="form-control" value="" min="1" step="1" >
+                        <input id="pisos" type="text" class="form-control" value="" min="1" step="1" onchange="proceso2()">
                 </div>
                 <div id="grafica1">
                     <canvas id="canvas2" height="450" width="600"></canvas>
@@ -97,14 +88,13 @@
         function getRandomInt(min=1, max=100) {
             return (Math.floor(Math.random() * (max - min)) + min);
         }
-        function proceso2(q){
-            q=parseInt(q);
+        function proceso2(){
             var grafica = document.getElementById('grafica1').innerHTML="<canvas id='canvas2' height='450' width='600'></canvas>";
             var ctx1 = document.getElementById('canvas2').getContext('2d');
             var capacidad = parseInt($("#capacidad").val());
             var pisos = parseInt($("#pisos").val());
             var config1 = configuracion2(ascensor(capacidad,pisos));
-            window.myLine = new Chart(ctx1, config1);
+            window.myLine2 = new Chart(ctx1, config1);
 
         }
 
@@ -122,16 +112,17 @@
 
         }
 
-		function configuracion2(labels,a){
+		function configuracion2(a){
             return {
                 type: 'horizontalBar',
                 data: {
-                    labels: labels,
+                    labels: a[0],
                     // backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
                     datasets: [{
-                        label: 'Proceso 1',
+                        backgroundColor: '#49147F',
+                        label: 'Personas en el ascensor',
                         fill: false,
-                        data: a
+                        data: a[1]
                     }]
                 },
                 options: {
@@ -192,6 +183,11 @@
             var q = getRandomInt();
             $("#quantum").val(""+q);
             proceso(q);
+            var cantidad = getRandomInt();
+            $("#capacidad").val(""+cantidad);
+            var pisos = getRandomInt();
+            $("#pisos").val(""+pisos);
+            proceso2();
 		};
 	
         </script>
