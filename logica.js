@@ -185,26 +185,39 @@ function configuracion2(a) {
 	};
 }
 function ascensor(capMax, canPisos) {
-	personasAscensor = Math.floor(Math.random() * capMax) + 1;
-	personasInicial = personasAscensor;
+	let personasAscensor = Math.floor(Math.random() * capMax) + 1;
+	const personasInicial = personasAscensor;
+	let cont = 0;
 	console.log('El ascensor comenzo con:', personasAscensor, 'personas.');
-	labels = [];
-	pasajerosPiso = [];
+	let pisoBajan = [];
+	let bajanPorPiso = [];
+	let pasajerosPiso = [];
+	let labels = [];
 
-	for (i = 1; i <= canPisos; i++) {
-		numeroPiso = i.toString();
-		labels.push('Piso ' + i);
-		if (personasAscensor !== 0) {
-			quedanAscensor = Math.floor(Math.random() * personasAscensor);
-			console.log('Quedan:', quedanAscensor);
-			bajanPorPiso = personasAscensor - quedanAscensor;
-			personasAscensor = quedanAscensor;
+	//arreglo que contiene el piso donde se va a bajar cada persona
+	for (let i = 0; i < canPisos; i++) {
+		if (cont < personasInicial) {
+			const pisoBaja = Math.floor(Math.random() * canPisos) + 1;
+			cont += 1;
+			pisoBajan.push(pisoBaja);
+		} else {
+			pisoBajan.push(0);
 		}
-		console.log('Se bajaron', bajanPorPiso, 'en el piso', i, 'quedan:', personasAscensor);
-		pasajerosPiso.push(personasAscensor);
 	}
-	console.log(labels);
-	console.log(pasajerosPiso);
+
+	//arreglo que tiene la cantidad de personas que se van a bajar por piso
+	for (let i = 1; i <= canPisos; i++) {
+		console.log('Piso ', i);
+		const personas = pisoBajan.filter((x) => x === i).length;
+		personasAscensor -= personas;
+		console.log('Se bajaron', personas, 'personas y quedan', personasAscensor);
+		labels.push('Piso ' + i.toString());
+		pasajerosPiso.push(personasAscensor);
+		bajanPorPiso.push(personas);
+	}
+
+	console.log('Piso en el que se baja cada pasajero', pisoBajan);
+	console.log('Cantidad de pasajeros que se baja por piso', bajanPorPiso);
 
 	return [ labels, pasajerosPiso, personasInicial ];
 }
@@ -288,9 +301,3 @@ function configuracion3(a) {
 	};
 }
 /**FIN METODOS PELOTA */
-
-
-
-
-
-
